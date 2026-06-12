@@ -1,4 +1,6 @@
-# ShopReact — Firebase React E-Commerce App
+# ShopReact — Firebase React E-Commerce App with CI/CD Pipeline
+
+![CI/CD](https://github.com/AbdelrahmanYousef9266/Firebase-React-Ecommerce/actions/workflows/main.yml/badge.svg)
 
 A full-featured e-commerce web application built with React, Vite, Redux Toolkit, and Firebase (Authentication + Cloud Firestore).
 
@@ -6,9 +8,24 @@ A full-featured e-commerce web application built with React, Vite, Redux Toolkit
 
 ## Live Demo
 
-**[https://your-app.vercel.app](https://your-app.vercel.app)**
+**[https://firebase-react-ecommerce-cc24ps09l-yousef92.vercel.app/](https://firebase-react-ecommerce-cc24ps09l-yousef92.vercel.app/)**
 
-> Replace the URL above with your actual Vercel deployment link after running the CD pipeline for the first time.
+The application is automatically deployed through the GitHub Actions CI/CD pipeline whenever changes are pushed to the main branch and all tests pass.
+
+---
+
+## Assignment Highlights
+
+This project demonstrates:
+
+- Firebase Authentication
+- Cloud Firestore CRUD operations
+- Redux Toolkit state management
+- Unit Testing with Vitest and React Testing Library
+- Integration Testing for cart functionality
+- Continuous Integration (CI) using GitHub Actions
+- Continuous Deployment (CD) using GitHub Actions and Vercel
+- Automated testing, build, and deployment pipeline
 
 ---
 
