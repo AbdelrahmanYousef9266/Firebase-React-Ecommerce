@@ -4,6 +4,14 @@ A full-featured e-commerce web application built with React, Vite, Redux Toolkit
 
 ---
 
+## Live Demo
+
+**[https://your-app.vercel.app](https://your-app.vercel.app)**
+
+> Replace the URL above with your actual Vercel deployment link after running the CD pipeline for the first time.
+
+---
+
 ## Features
 
 - **Firebase Authentication** — Register and login with email and password
@@ -27,6 +35,10 @@ A full-featured e-commerce web application built with React, Vite, Redux Toolkit
 | Firebase Auth | Email/password authentication |
 | Cloud Firestore | Product, user, and order database |
 | Plain CSS | Styling (no CSS framework) |
+| Vitest | Unit and integration test runner |
+| React Testing Library | Component rendering and DOM assertions |
+| GitHub Actions | CI/CD pipeline automation |
+| Vercel | Production deployment |
 
 ---
 
@@ -201,6 +213,87 @@ FakeStore API is contacted **only** during the optional seed action, and only wh
 
 ---
 
+## Testing
+
+This project uses **Vitest** with **React Testing Library** for unit and integration tests.
+
+### Run tests locally
+
+```bash
+npm run test
+```
+
+### Test files
+
+| File | Type | What it covers |
+|---|---|---|
+| `src/test/Navbar.test.jsx` | Unit | Navbar renders nav links and cart badge |
+| `src/test/ProductCard.test.jsx` | Unit | ProductCard renders title, price, category, button |
+| `src/test/CartIntegration.test.jsx` | Integration | Clicking Add to Cart updates Redux store cart count |
+
+### Test coverage summary
+
+- **Navbar** — 4 tests: Home/Cart links present, Login/Register shown when logged out, cart badge displays correct count, badge hidden when cart is empty
+- **ProductCard** — 5 tests: title, price, category, button, and description rendered correctly
+- **Cart Integration** — 4 tests: cart empty on load, item added to Redux store on click, quantity increments for existing items, correct product data stored
+
+---
+
+## CI/CD Pipeline
+
+### GitHub Actions
+
+The workflow file is at [.github/workflows/main.yml](.github/workflows/main.yml).
+
+**Triggers:** Push or pull request to `main`
+
+**CI job — Test and Build:**
+1. Checkout repository
+2. Setup Node.js 20 with npm cache
+3. `npm ci` — install exact locked dependencies
+4. `npm run test` — run all Vitest tests
+5. `npm run build` — Vite production build
+
+**CD job — Deploy to Vercel:**
+- Runs only after CI passes
+- Runs only on push to `main` (not on pull requests)
+- Deploys to production using Vercel CLI
+
+### Vercel Deployment
+
+The app is deployed to Vercel automatically on every push to `main` that passes CI.
+
+**Required GitHub repository secrets:**
+
+| Secret | How to get it |
+|---|---|
+| `VERCEL_TOKEN` | Vercel dashboard → Settings → Tokens → Create token |
+| `VERCEL_ORG_ID` | Run `npx vercel link` in project root, then check `.vercel/project.json` |
+| `VERCEL_PROJECT_ID` | Same `.vercel/project.json` file after linking |
+
+**Firebase environment variables** must be set in the Vercel dashboard under Project → Settings → Environment Variables. Add all six `VITE_FIREBASE_*` keys from your `.env` file so the deployed app can connect to Firebase at runtime.
+
+### How to set up Vercel the first time
+
+```bash
+# 1. Install Vercel CLI
+npm install -g vercel
+
+# 2. Link your project (run from the project root)
+npx vercel link
+
+# 3. Copy the org/project IDs from .vercel/project.json
+cat .vercel/project.json
+
+# 4. Add VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID to GitHub secrets
+#    GitHub repo → Settings → Secrets and variables → Actions → New repository secret
+
+# 5. Push to main — the Actions workflow handles the rest
+git push origin main
+```
+
+---
+
 ## Requirements Checklist
 
 - [x] Firebase Authentication (email/password)
@@ -223,6 +316,14 @@ FakeStore API is contacted **only** during the optional seed action, and only wh
 - [x] `.env` in `.gitignore`
 - [x] `npm run dev` works
 - [x] `npm run build` passes with no errors
+- [x] Vitest + React Testing Library configured
+- [x] Unit tests for Navbar component
+- [x] Unit tests for ProductCard component
+- [x] Integration test: cart updates when adding a product
+- [x] `npm run test` passes (13 tests across 3 files)
+- [x] GitHub Actions CI workflow (test + build on push to main)
+- [x] GitHub Actions CD workflow (deploy to Vercel after CI passes)
+- [x] Firebase mocked in tests — no real network calls
 
 ---
 
